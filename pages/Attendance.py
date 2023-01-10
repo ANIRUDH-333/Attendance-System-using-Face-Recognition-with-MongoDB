@@ -6,7 +6,6 @@ import face_recognition
 import os
 import base64
 from datetime import date
-import pyautogui
 
 def add_bg_from_local(image_file):
     with open(image_file, "rb") as image_file:
@@ -47,20 +46,23 @@ def detectFace(picture):
 def getData():
     add_bg_from_local('back_grd.jpg')
     st.title("Attendance System")
-    st.subheader("Login")
+    st.subheader("Take Attendance")
     rollNumber = st.text_input("Roll Number")
     picture = st.camera_input("Take a picture")
     return rollNumber,picture
 
 def checkAttendance(rollNumber,img_code):
-    client = MongoClient("mongodb+srv://dineshilla:dineshilla@cluster0.1tzkrhf.mongodb.net/?retryWrites=true&w=majority")
-    db = client.test
-    
-    
+    # client = MongoClient("mongodb+srv://dineshilla:dineshilla@cluster0.1tzkrhf.mongodb.net/?retryWrites=true&w=majority")
+    client = MongoClient("mongodb://localhost:27017/")
+    db = client.AttendanceSystem
     if st.button("Login"):
         col1 = db.UserData
         userData = col1.find_one({"RollNumber" : rollNumber})
+        print(userData)
+        print([np.array(list(userData['Face Code']))],)
+        print(img_code)
         result = face_recognition.compare_faces([np.array(list(userData['Face Code']))], img_code)
+        print(result)
         if result[0]:
             attendance = "Present"
             col2 = db.Attendance
@@ -69,17 +71,13 @@ def checkAttendance(rollNumber,img_code):
         if result[0] == False:
             attendance = "Absent"
             st.success("Face Not Matched")
-        
-
-            
-
-
 
 def main():
     rollNumber,picture = getData()
     detectFace(picture)
     img_code = image_encode()
-    checkAttendance(rollNumber,img_code)
+    if picture:
+        checkAttendance(rollNumber,img_code)
     
 if __name__ == '__main__' :
     main()

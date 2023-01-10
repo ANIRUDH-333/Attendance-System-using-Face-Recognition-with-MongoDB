@@ -78,18 +78,14 @@ def image_encode():
     return img_code
 
 def getData(name,rollNumber,branch,emailID,phoneNumber,img_code):
-    #client = MongoClient('mongodb://localhost:27017/')
-    client = MongoClient("mongodb+srv://dineshilla:dineshilla@cluster0.1tzkrhf.mongodb.net/?retryWrites=true&w=majority")
-    db = client.test
-    # db = client.AttendanceSystem
+    client = MongoClient('mongodb://localhost:27017/')
+    # db = client.test
+    db = client.AttendanceSystem
     col = db.UserData
     if st.button("Register"):
         col.insert_one({"Name" : name,"RollNumber" : rollNumber,"Branch" : branch,"Email ID" : emailID,"Phone NUmber" : phoneNumber,"Face Code" : img_code})
-        st.success("Done")
-        pyautogui.hotkey('ctrl','r')
-
-        
-        
+        st.success("Successfully Registered")
+    
 def registerPage():
     name,rollNumber,branch,emailID,phoneNumber,picture = streamlit_app()
     detectFace(picture)
