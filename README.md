@@ -1,6 +1,15 @@
 # Attendance-System-using-Face-Recognition-with-MongoDB
 We are using face recognition for attendance system. We are using MongoDB server for the database purposes.
-## Description
+
+
+## Project Description
+
+Created an innovative attendance system based on face recognition technology, streamlining and automating the attendance process for organizations.
+Utilized Streamlit to develop an intuitive front-end interface, enabling users to seamlessly interact with the system and view attendance data.
+Integrated MongoDB for reliable and efficient database storage, and utilized the face_recognition Python package to accurately identify and register individuals' attendance.
+
+## Knowledge
+Face Recognition, Streamlit, MongoDB, Python, Database Integration, User Interface Design, Automation
 
 
 # Connecting to MongoDB Server
